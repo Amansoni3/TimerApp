@@ -118,7 +118,7 @@ const TimerApp = () => {
             Start Timer
           </Button>
         </div>
-        <div>
+        <div className='timer'>
           {countdown}
           {msg && countdown === 0 && <p>{msg}</p>}
         </div>
