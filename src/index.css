@@ -40,3 +40,46 @@ h2{
   text-align: center;
   padding: 30px;
 }
+@media (max-width: 767px) {
+  .container {
+    height: auto;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .box {
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    padding: 15px;
+  }
+
+  .box {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .container {
+    padding: 20px;
+  }
+
+  .box {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding: 30px;
+  }
+
+  .box {
+    max-width: 1000px;
+  }
+}
