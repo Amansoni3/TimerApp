@@ -18,9 +18,11 @@ const TimerApp = () => {
       }, 1000);
     } else if (countdown === 0) {
       setMsg('Countdown finished!');
+      setTimeout(()=>{window.location.reload()},2000)
     }
 
     return () => clearTimeout(timer);
+    
   }, [countdown]);
 
   const startTimer = () => {
@@ -73,15 +75,17 @@ const TimerApp = () => {
           />
         </div>
         <div className='button'>
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={startTimer}
-            disabled={isTimerRunning}
-            style={{ marginBottom: '10px', display: isTimerRunning ? 'none' : 'block' }}
-          >
-            Start Timer
-          </Button>
+          {!isTimerRunning && countdown === '' && (
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={startTimer}
+              disabled={isTimerRunning}
+              style={{ padding: '10px' }}
+            >
+              Start Timer
+            </Button>
+          )}
           {isTimerRunning && (
             <Button
               fullWidth
