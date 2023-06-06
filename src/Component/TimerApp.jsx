@@ -8,17 +8,19 @@ const TimerApp = () => {
   const [countdown, setCountdown] = useState('');
   const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   useEffect(() => {
+    let timer;
     if (countdown > 0) {
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         setCountdown(countdown - 1);
       }, 1000);
-
-      return () => clearTimeout(timer);
     } else if (countdown === 0) {
       setMsg('Countdown finished!');
     }
+
+    return () => clearTimeout(timer);
   }, [countdown]);
 
   const startTimer = () => {
@@ -26,12 +28,29 @@ const TimerApp = () => {
       setCountdown(number);
       setMsg('');
       setError('');
+      setIsTimerRunning(true);
+      setNumber('');
     }
+  };
+
+  const stopTimer = () => {
+    clearTimeout();
+    setIsTimerRunning(false);
+    setCountdown('');
+    setMsg('');
+    setError('');
+    setNumber('');
   };
 
   const validateInput = (input) => {
     if (input === '' || isNaN(input) || input.includes('.') || input < 0) {
       setError('Please enter a positive integer');
+      return false;
+    } else if (input > 20) {
+      setError('Number should not be greater than 20');
+      return false;
+    } else if (input === '0') {
+      setError('Number should not be zero');
       return false;
     }
     return true;
@@ -44,21 +63,38 @@ const TimerApp = () => {
         <div className='textfield'>
           <TextField
             fullWidth
+            type="number"
             value={number}
             onChange={(event) => setNumber(event.target.value)}
             error={error !== ''}
             helperText={error}
-            id="outlined-basic"
             label="Enter Number"
-            variant="outlined"
+            disabled={isTimerRunning}
           />
         </div>
         <div className='button'>
-          <Button fullWidth variant="contained" onClick={startTimer}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={startTimer}
+            disabled={isTimerRunning}
+            style={{ marginBottom: '10px', display: isTimerRunning ? 'none' : 'block' }}
+          >
             Start Timer
           </Button>
+          {isTimerRunning && (
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={stopTimer}
+              className="stop-button"
+              style={{ marginBottom: '10px' }}
+            >
+              Stop Timer
+            </Button>
+          )}
         </div>
-        <div className='timer'>
+        <div className="timer">
           {countdown}
           {msg && countdown === 0 && <p>{msg}</p>}
         </div>
