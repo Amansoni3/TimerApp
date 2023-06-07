@@ -27,7 +27,7 @@ const TimerApp = () => {
 
   const startTimer = () => {
     if (validateInput(number)) {
-      setCountdown(number);
+      setCountdown(Math.floor(number));
       setMsg('');
       setError('');
       setIsTimerRunning(true);
@@ -45,7 +45,8 @@ const TimerApp = () => {
   };
 
   const validateInput = (input) => {
-    if (input === '' || isNaN(input) || input.includes('.') || input < 0) {
+    //input.includes('.') 
+    if (input === '' || isNaN(input) || input < 0) {
       setError('Please enter a positive integer');
       return false;
     } else if (input > 20) {
@@ -81,7 +82,7 @@ const TimerApp = () => {
               variant="contained"
               onClick={startTimer}
               disabled={isTimerRunning}
-              style={{ padding: '10px' }}
+              style={{ marginBottom: '10px' }}
             >
               Start Timer
             </Button>
